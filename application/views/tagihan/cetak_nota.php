@@ -7,6 +7,7 @@
 <body onload="window.print();	">
 	<center>
 	<h4>PT. NMV NIPAH PANJANG</h4>
+	<h5>BUKTI PEMBAYARAN TAGIHAN IURAN TV KABEL</h5>
 	</center>
 	<hr style="border-bottom:3px dashed black;">
 
@@ -103,7 +104,7 @@
 		</tr>
 	</table>
 	
-	
+	<p>PT.NMV NIPAH PANJANG  menyatakan struk ini sebagai bukti pembayaran yang sah.</p>
 
 	<p>
 		<center>
