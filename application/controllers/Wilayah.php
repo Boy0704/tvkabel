@@ -1,0 +1,162 @@
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class Wilayah extends CI_Controller
+{
+    var $judul_page = "Wilayah";
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Wilayah_model');
+        $this->load->library('form_validation');
+        if ($this->session->userdata('level') == '') {
+            redirect('login');
+        }
+    }
+
+    public function index()
+    {
+        $q = urldecode($this->input->get('q', TRUE));
+        $start = intval($this->input->get('start'));
+        
+        if ($q <> '') {
+            $config['base_url'] = base_url() . 'wilayah/index.html?q=' . urlencode($q);
+            $config['first_url'] = base_url() . 'wilayah/index.html?q=' . urlencode($q);
+        } else {
+            $config['base_url'] = base_url() . 'wilayah/index.html';
+            $config['first_url'] = base_url() . 'wilayah/index.html';
+        }
+
+        $config['per_page'] = 10;
+        $config['page_query_string'] = TRUE;
+        $config['total_rows'] = $this->Wilayah_model->total_rows($q);
+        $wilayah = $this->Wilayah_model->get_limit_data($config['per_page'], $start, $q);
+
+        $this->load->library('pagination');
+        $this->pagination->initialize($config);
+
+        $data = array(
+            'wilayah_data' => $wilayah,
+            'q' => $q,
+            'pagination' => $this->pagination->create_links(),
+            'total_rows' => $config['total_rows'],
+            'start' => $start,
+            'judul_page' => $this->judul_page,
+            'konten' => 'wilayah/wilayah_list',
+        );
+        $this->load->view('v_index', $data);
+    }
+
+    public function read($id) 
+    {
+        $row = $this->Wilayah_model->get_by_id($id);
+        if ($row) {
+            $data = array(
+		'id_wilayah' => $row->id_wilayah,
+		'wilayah' => $row->wilayah,
+	    );
+            $this->load->view('wilayah/wilayah_read', $data);
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('wilayah'));
+        }
+    }
+
+    public function create() 
+    {
+        $data = array(
+            'judul_page' => $this->judul_page,
+            'konten' => 'wilayah/wilayah_form',
+            'button' => 'Create',
+            'action' => site_url('wilayah/create_action'),
+	    'id_wilayah' => set_value('id_wilayah'),
+	    'wilayah' => set_value('wilayah'),
+	);
+        $this->load->view('v_index', $data);
+    }
+    
+    public function create_action() 
+    {
+        $this->_rules();
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->create();
+        } else {
+            $data = array(
+		'wilayah' => $this->input->post('wilayah',TRUE),
+	    );
+
+            $this->Wilayah_model->insert($data);
+            $this->session->set_flashdata('message', 'Create Record Success');
+            redirect(site_url('wilayah'));
+        }
+    }
+    
+    public function update($id) 
+    {
+        $row = $this->Wilayah_model->get_by_id($id);
+
+        if ($row) {
+            $data = array(
+                'judul_page' => $this->judul_page,
+                'konten' => 'wilayah/wilayah_form',
+                'button' => 'Update',
+                'action' => site_url('wilayah/update_action'),
+		'id_wilayah' => set_value('id_wilayah', $row->id_wilayah),
+		'wilayah' => set_value('wilayah', $row->wilayah),
+	    );
+            $this->load->view('v_index', $data);
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('wilayah'));
+        }
+    }
+    
+    public function update_action() 
+    {
+        $this->_rules();
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->update($this->input->post('id_wilayah', TRUE));
+        } else {
+            $data = array(
+		'wilayah' => $this->input->post('wilayah',TRUE),
+	    );
+
+            $this->Wilayah_model->update($this->input->post('id_wilayah', TRUE), $data);
+            $this->session->set_flashdata('message', 'Update Record Success');
+            redirect(site_url('wilayah'));
+        }
+    }
+    
+    public function delete($id) 
+    {
+        $row = $this->Wilayah_model->get_by_id($id);
+
+        if ($row) {
+            $this->Wilayah_model->delete($id);
+            $this->session->set_flashdata('message', 'Delete Record Success');
+            redirect(site_url('wilayah'));
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('wilayah'));
+        }
+    }
+
+    public function _rules() 
+    {
+	$this->form_validation->set_rules('wilayah', 'wilayah', 'trim|required');
+
+	$this->form_validation->set_rules('id_wilayah', 'id_wilayah', 'trim');
+	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    }
+
+}
+
+/* End of file Wilayah.php */
+/* Location: ./application/controllers/Wilayah.php */
+/* Please DO NOT modify this information : */
+/* Generated by Boy Kurniawan 2022-08-03 17:37:42 */
+/* https://jualkoding.com */
