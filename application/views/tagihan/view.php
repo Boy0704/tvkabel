@@ -4,7 +4,7 @@
 			<select class="form-control select2" name="id_pelanggan">
 	            <option value="">Nama Pelanggan</option>
 	            <?php foreach ($this->db->get('pelanggan')->result() as $rw): ?>
-	                <option value="<?php echo $rw->id_pelanggan ?>" <?php echo ( isset($_GET['id_pelanggan']) AND $_GET['id_pelanggan'] == $rw->id_pelanggan ) ? 'selected' : '' ?>><?php echo $rw->nama ?></option>
+	                <option value="<?php echo $rw->id_pelanggan ?>" <?php echo ( isset($_GET['id_pelanggan']) AND $_GET['id_pelanggan'] == $rw->id_pelanggan ) ? 'selected' : '' ?>><?php echo $rw->nama ?> - <?php echo get_data('wilayah','id_wilayah',$rw->id_wilayah,'wilayah') ?></option>
 	            <?php endforeach ?>
 	        </select>
 		</div>
