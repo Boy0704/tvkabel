@@ -1,6 +1,14 @@
 <div class="row" style="margin-bottom: 10px">
 	<form action="" method="GET">
 		<div class="col-md-3">
+			<select class="form-control select2" name="id_pelanggan">
+	            <option value="">Nama Pelanggan</option>
+	            <?php foreach ($this->db->get('pelanggan')->result() as $rw): ?>
+	                <option value="<?php echo $rw->id_pelanggan ?>" <?php echo ( isset($_GET['id_pelanggan']) AND $_GET['id_pelanggan'] == $rw->id_pelanggan ) ? 'selected' : '' ?>><?php echo $rw->nama ?></option>
+	            <?php endforeach ?>
+	        </select>
+		</div>
+		<!-- <div class="col-md-3">
 			<select class="form-control select2" name="tahun">
 	            <option value="">Tahun</option>
 	            <?php foreach ($this->db->get('tahun')->result() as $rw): ?>
@@ -15,7 +23,7 @@
 	                <option value="<?php echo $rw->id_wilayah ?>" <?php echo ( isset($_GET['id_wilayah']) AND $_GET['id_wilayah'] == $rw->id_wilayah ) ? 'selected' : '' ?>><?php echo $rw->wilayah ?></option>
 	            <?php endforeach ?>
 	        </select>
-		</div>
+		</div> -->
 		<div class="col-md-3"><button type="submit" class="btn btn-warning">Cari</button></div>
 	</form>
 </div>
@@ -39,10 +47,12 @@
 					<?php 
 					$no = 1;
 					$tahun = date('Y');
-					if ( isset($_GET['tahun']) AND !empty($_GET['tahun']) ) {
-		            	$tahun = $this->input->get('tahun');
+					if ( isset($_GET['id_pelanggan']) AND !empty($_GET['id_pelanggan']) ) {
+		            	$id_pelanggan = $this->input->get('id_pelanggan');
+		            	$this->db->where('id_pelanggan', $id_pelanggan);
 		            }
-
+		            $this->db->order_by('id_pelanggan', 'desc');
+		            $this->db->limit(20);
 					$data_tagihan = $this->db->get('pelanggan');
 					foreach ($data_tagihan->result() as $rw): ?>
 						
@@ -156,7 +166,7 @@
 							<b><?php echo $tahun ?></b>
 						</td>
 					</tr>
-					<?php endforeach ?>
+					<?php $no++; endforeach ?>
 				</tbody>
 			</table>
 		</div>
