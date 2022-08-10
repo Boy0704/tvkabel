@@ -109,8 +109,10 @@
 
 	<p>
 		<center>
-			TERIMA KASIH <br>
-			TELAH MENGGUNAKAN LAYANAN KAMI 	<br>
+			Terima Kasih <br>
+			Kami ucapkan kepada semua pelanggan 	<br>
+			NMV NIPAH PANJANG <br>
+			yang sudah bergabung dengan kami
 		</center>
 	</p>
 
