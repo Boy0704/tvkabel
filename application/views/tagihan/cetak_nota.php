@@ -7,8 +7,6 @@
 <body onload="window.print();	">
 	<center>
 	<h4>PT. NMV NIPAH PANJANG</h4>
-	<h5>NIPAH PANJANG </h5>
-	<b>JAMBI</b>
 	</center>
 	<hr style="border-bottom:3px dashed black;">
 
