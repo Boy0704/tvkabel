@@ -121,7 +121,7 @@
 
             <div class="row">
                 <div class="col-md-7">
-                    <canvas id="myChart" width="80%" height="42"></canvas>
+                    <canvas id="myChart" width="80%" height="100"></canvas>
                 </div>
 
                 <div class="col-md-4" style="padding-top:28px">
