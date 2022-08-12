@@ -65,7 +65,6 @@
 		            	$this->db->where('id_wilayah', $id_wilayah);
 		            }
 		            $this->db->order_by('id_pelanggan', 'desc');
-		            $this->db->limit(20);
 					$data_tagihan = $this->db->get('pelanggan');
 					foreach ($data_tagihan->result() as $rw): ?>
 						
