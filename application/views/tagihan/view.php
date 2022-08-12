@@ -1,6 +1,15 @@
 <div class="row" style="margin-bottom: 10px">
 	<form action="" method="GET">
 		<div class="col-md-3">
+			<select class="form-control select2" name="id_wilayah">
+	            <option value="">Wilayah</option>
+	            <?php foreach ($this->db->get('wilayah')->result() as $rw): ?>
+	                <option value="<?php echo $rw->id_wilayah ?>" <?php echo ( isset($_GET['id_wilayah']) AND $_GET['id_wilayah'] == $rw->id_wilayah ) ? 'selected' : '' ?>><?php echo $rw->wilayah ?></option>
+	            <?php endforeach ?>
+	        </select>
+		</div>
+
+		<div class="col-md-3">
 			<select class="form-control select2" name="id_pelanggan">
 	            <option value="">Nama Pelanggan</option>
 	            <?php foreach ($this->db->get('pelanggan')->result() as $rw): ?>
@@ -50,6 +59,10 @@
 					if ( isset($_GET['id_pelanggan']) AND !empty($_GET['id_pelanggan']) ) {
 		            	$id_pelanggan = $this->input->get('id_pelanggan');
 		            	$this->db->where('id_pelanggan', $id_pelanggan);
+		            }
+		            if ( isset($_GET['id_wilayah']) AND !empty($_GET['id_wilayah']) ) {
+		            	$id_wilayah = $this->input->get('id_wilayah');
+		            	$this->db->where('id_wilayah', $id_wilayah);
 		            }
 		            $this->db->order_by('id_pelanggan', 'desc');
 		            $this->db->limit(20);
