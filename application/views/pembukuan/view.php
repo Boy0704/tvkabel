@@ -116,7 +116,7 @@
                         WHERE 
                         $cari_wilayah
                         $cari_kolektor
-                        d.created_at BETWEEN '$tgl1' and '$tgl2'
+                        d.created_at BETWEEN '$tgl1 00:00:59' and '$tgl2 23:59:59'
                         ORDER BY $sorting DESC
 
                             ");
