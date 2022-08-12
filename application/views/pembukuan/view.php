@@ -22,8 +22,8 @@
                 <div class="col-md-3">
                     <span>Sorting Berdasarkan</span>
                     <select class="form-control" name="sorting">
-                        <option value="created_at">Tanggal Bayar</option>
-                        <option value="total_bayar">Tagihan</option>
+                        <option value="created_at" <?php echo ( isset($_GET['sorting']) AND $_GET['sorting']=='created_at' ) ? 'selected' : '' ?>>Tanggal Bayar</option>
+                        <option value="total_bayar" <?php echo ( isset($_GET['sorting']) AND $_GET['sorting']=='total_bayar' ) ? 'selected' : '' ?>>Tagihan</option>
                     </select>
                 </div>
                 <div class="col-md-3">
