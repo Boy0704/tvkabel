@@ -39,9 +39,9 @@
         <li><a href="rw"><i class="fa fa-bank"></i> <span>Data RW</span></a></li>
         <li><a href="tahun"><i class="fa fa-bank"></i> <span>Data Tahun</span></a></li>
         <li><a href="app/tagihan_pelanggan"><i class="fa fa-cart-plus"></i> <span>Tagihan Pelanggan</span></a></li>
-        <li><a href="#app/laporan_pelanggan"><i class="fa fa-external-link-square"></i> <span>Laporan Pelanggan</span></a></li>
-        <li><a href="#app/pembukuan"><i class="fa fa-print"></i> <span>Pembukuan</span></a></li>
-        <li><a href="#app/statistik"><i class="fa fa-pie-chart"></i> <span>Statistik</span></a></li>
+        <!-- <li><a href="#app/laporan_pelanggan"><i class="fa fa-external-link-square"></i> <span>Laporan Pelanggan</span></a></li> -->
+        <li><a href="app/pembukuan?tgl1=2022-08-12&tgl2=2022-08-12&sorting=created_at&id_wilayah=&kolektor="><i class="fa fa-print"></i> <span>Pembukuan</span></a></li>
+        <li><a href="app/statistik/bulan?id_wilayah=&bulan=<?php echo date('m') ?>&tahun=<?php echo date('Y') ?>"><i class="fa fa-pie-chart"></i> <span>Statistik</span></a></li>
         <li><a href="a_user"><i class="fa fa-users"></i> <span>Master User</span></a></li>
         <li><a href="login/logout"><i class="fa fa-sign-out"></i> <span>Keluar</span></a></li>
 

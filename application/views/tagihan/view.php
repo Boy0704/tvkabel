@@ -1,8 +1,9 @@
 <div class="row" style="margin-bottom: 10px">
 	<form action="" method="GET">
 		<div class="col-md-3">
+			<span>Wilayah</span>
 			<select class="form-control select2" name="id_wilayah">
-	            <option value="">Wilayah</option>
+	            <option value="">Semua Wilayah</option>
 	            <?php foreach ($this->db->get('wilayah')->result() as $rw): ?>
 	                <option value="<?php echo $rw->id_wilayah ?>" <?php echo ( isset($_GET['id_wilayah']) AND $_GET['id_wilayah'] == $rw->id_wilayah ) ? 'selected' : '' ?>><?php echo $rw->wilayah ?></option>
 	            <?php endforeach ?>
@@ -10,20 +11,22 @@
 		</div>
 
 		<div class="col-md-3">
-			<select class="form-control select2" name="id_pelanggan">
-	            <option value="">Nama Pelanggan</option>
-	            <?php foreach ($this->db->get('pelanggan')->result() as $rw): ?>
-	                <option value="<?php echo $rw->id_pelanggan ?>" <?php echo ( isset($_GET['id_pelanggan']) AND $_GET['id_pelanggan'] == $rw->id_pelanggan ) ? 'selected' : '' ?>><?php echo $rw->nama ?> - <?php echo get_data('wilayah','id_wilayah',$rw->id_wilayah,'wilayah') ?></option>
-	            <?php endforeach ?>
-	        </select>
-		</div>
-
-		<div class="col-md-3">
+			<span>Jumlah Data</span>
 			<select class="form-control select2" name="limit">
 	            <option value="20" <?php echo ( isset($_GET['limit']) AND $_GET['limit'] == 20 ) ? 'selected' : '' ?> >20 Data</option>
 	            <option value="30" <?php echo ( isset($_GET['limit']) AND $_GET['limit'] == 30 ) ? 'selected' : '' ?> >30 Data</option>
 	            <option value="40" <?php echo ( isset($_GET['limit']) AND $_GET['limit'] == 40 ) ? 'selected' : '' ?>>40 Data</option>
-	            <option value="">Semua Data</option>
+	            <option value="all" <?php echo ( isset($_GET['limit']) AND $_GET['limit'] == 'all' ) ? 'selected' : '' ?>>Semua Data</option>
+	        </select>
+		</div>
+
+		<div class="col-md-3">
+			<span>Nama Pelanggan</span>
+			<select class="form-control select2" name="id_pelanggan">
+	            <option value="">Semua Pelanggan</option>
+	            <?php foreach ($this->db->get('pelanggan')->result() as $rw): ?>
+	                <option value="<?php echo $rw->id_pelanggan ?>" <?php echo ( isset($_GET['id_pelanggan']) AND $_GET['id_pelanggan'] == $rw->id_pelanggan ) ? 'selected' : '' ?>><?php echo $rw->nama ?> - <?php echo get_data('wilayah','id_wilayah',$rw->id_wilayah,'wilayah') ?></option>
+	            <?php endforeach ?>
 	        </select>
 		</div>
 		<!-- <div class="col-md-3">
@@ -42,7 +45,7 @@
 	            <?php endforeach ?>
 	        </select>
 		</div> -->
-		<div class="col-md-3"><button type="submit" class="btn btn-warning">Cari</button></div>
+		<div class="col-md-3"><br><button type="submit" class="btn btn-warning">Cari</button></div>
 	</form>
 </div>
 <hr>
@@ -76,10 +79,16 @@
 		            $this->db->order_by('id_pelanggan', 'desc');
 		            if ( isset($_GET['limit']) AND !empty($_GET['limit']) ) {
 		            	$limit = $this->input->get('limit');
-		            	$this->db->limit($limit);
+		            	if ($limit == 'all') {
+		            		// code...
+		            	} else {
+		            		$this->db->limit($limit);
+		            	}
+		            	
 		            } else {
 		            	$this->db->limit(20);
 		            }
+		            $this->db->where('aktif', 'y');
 					$data_tagihan = $this->db->get('pelanggan');
 					foreach ($data_tagihan->result() as $rw): ?>
 						

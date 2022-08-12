@@ -1,78 +1,153 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="col-md-12" style="margin-top:12px">
-                    <div class="col-md-2">
-                      <span>Tanggal Awal</span>
-                      <input type="text" id="from_date" value="2022-08-01" class="form-control">
-                    </div>
-                    <div class="col-md-2">
-                      <span>Tanggal Akhir</span>
-                      <input type="text" id="to_date" value="2022-08-04" class="form-control">
-                    </div>
-                    <div class="col-md-3">
-                      <span>Periode Jam</span>
-                      <select class="form-control" id="jam">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="" method="GET">
+            <div class="col-md-12" style="margin-top:12px">
+                <div class="col-md-2">
+                    <span>Tanggal Awal</span>
+                    <input type="date" name="tgl1" value="<?php echo ( isset($_GET['tgl1']) AND !empty($_GET['tgl1']) ) ? $_GET['tgl1'] : date('Y-m-d') ?>" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <span>Tanggal Akhir</span>
+                    <input type="date" name="tgl2" value="<?php echo ( isset($_GET['tgl2']) AND !empty($_GET['tgl2']) ) ? $_GET['tgl2'] : date('Y-m-d') ?>" class="form-control">
+                </div>
+                <!-- <div class="col-md-3">
+                    <span>Periode Jam</span>
+                    <select class="form-control" name="jam">
                         <option value="0">Semua Periode Jam</option>
                         <option value="1">Pagi (00.00-12.59)</option>
                         <option value="2">Sore (13:00-23.59)</option>
-                      </select>
-                    </div>
-                    <div class="col-md-3">
-                      <span>Sorting Berdasarkan</span>
-                      <select class="form-control" id="sorting">
-                        <option value="0">Tanggal Bayar</option>
-                        <option value="1">Tagihan</option>
-                      </select>
-                    </div>
-                    <div class="col-md-3">
-                      <span>Pilih Wilayah</span>
-                      <select class="form-control" id="kelurahan">
+                    </select>
+                </div> -->
+                <div class="col-md-3">
+                    <span>Sorting Berdasarkan</span>
+                    <select class="form-control" name="sorting">
+                        <option value="created_at">Tanggal Bayar</option>
+                        <option value="total_bayar">Tagihan</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <span>Pilih Wilayah</span>
+                    <select class="form-control select2" name="id_wilayah">
                         <option value="">Semua Wilayah</option>
-                        <option value="1">G dayaku 8</option>
-                        <option value="2">Air Terjun</option>
-                        <option value="3">G dayaku7</option>
-                        <option value="4">Air Terjun2</option>
-                        <option value="5">Gunung Batu</option>
-                        <option value="6">G Dayaku6</option>
-                        <option value="7">Gg Manggis</option>
-                        <option value="8">MULAWARMAN</option>
-                        <option value="9">G Dayaku5</option>
-                        <option value="10">Gg Pelangi 5</option>
-                        <option value="11">TARUNA</option>
-                        <option value="12">GG SUKUN</option>
-                        <option value="13">KAMP JAWA</option>
-                        <option value="14">JL KESEHATAN</option>
-                      </select>
-                    </div>
-                    <div class="col-md-2">
-                      <span>Pilih Kolektor</span>
-                      <select class="form-control" id="kolektor">
+                        <?php foreach ($this->db->get('wilayah')->result() as $rw): ?>
+                        <option value="<?php echo $rw->id_wilayah ?>" <?php echo ( isset($_GET['id_wilayah']) AND
+                            $_GET['id_wilayah']==$rw->id_wilayah ) ? 'selected' : '' ?>>
+                            <?php echo $rw->wilayah ?>
+                        </option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <span>Pilih Kolektor</span>
+                    <select class="form-control select2" name="kolektor">
                         <option value="">Semua Kolektor</option>
-                        <option value="herman">Herman</option>
-                        <option value="joko">joko</option>
-                        <option value="kolektor">kolektor</option>
-                        <option value="admin">Admin</option>
-                      </select>
-                    </div>
-                    <div class="col-md-1" style="padding-top: 33px;padding-bottom: 12px;">
-                      <button class="btn btn-info" onclick="getTablePembukuan();">
-                        <i class="material-icons">search</i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="table-responsive">
-                    
-                    <table class="table table-bordered">
-                      <tr>
-                        <td>No</td>
-                      </tr>
-                      <tr>
-                        <td>NA</td>
-                      </tr>
-                    </table>
+                        <?php foreach ($this->db->get('a_user')->result() as $br): 
+                        ?>
+                            <option value="<?php echo $br->id_user ?>" <?php echo ( isset($_GET['kolektor']) AND
+                            $_GET['kolektor']==$br->id_user ) ? 'selected' : '' ?>><?php echo $br->nama_lengkap ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+                <div class="col-md-1" style="padding-top: 33px;padding-bottom: 12px;">
+                    <button class="btn btn-info">
+                        <i class="fa fa-search">search</i>
+                    </button>
+                </div>
+            </div>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <div class="table-responsive">
 
-                  </div>
+                <table class="table table-bordered">
+                    <thead class="text-primary">
+                        <th>No</th>
+                        <th>ID Plgn</th>
+                        <th>Nama</th>
+                        <th>Alamat</th>
+                        <th>Paket</th>
+                        <th>Tagihan Bulan</th>
+                        <th>Total</th>
+                        <th>Denda</th>
+                        <th>Tanggal Dibayar</th>
+                        <th>Kolektor</th>
+                    </thead>
+                    <tbody>
+
+                        <?php 
+                        $no = 1;
+                        $total1 = 0;
+                        $total2 = 0;
+                        $tgl1 = $this->input->get('tgl1');
+                        $tgl2 = $this->input->get('tgl2');
+                        $sorting = $this->input->get('sorting');
+                        $id_wilayah = $this->input->get('id_wilayah');
+                        $kolektor = $this->input->get('kolektor');
+
+                        $cari_wilayah = "";
+                        $cari_kolektor = "";
+                        if ($id_wilayah != '') {
+                            $cari_wilayah = "a.id_wilayah = '$id_wilayah' and";
+                        }
+                        if ($kolektor != "") {
+                            $cari_kolektor = "d.created_by = '$kolektor' and";
+                        }
+
+                        $data = $this->db->query("
+
+                                 SELECT
+        a.id_pelanggan,
+        a.kd_pelanggan,
+        a.nama,
+        c.wilayah,
+        b.layanan,
+        d.id_bulan,
+        d.tahun,
+        d.total_bayar,
+        d.denda,
+        d.created_at,
+        d.created_by
+    FROM
+        pelanggan AS a
+        INNER JOIN layanan AS b ON a.id_layanan = b.id_layanan
+        INNER JOIN wilayah AS c ON a.id_wilayah = c.id_wilayah
+        INNER JOIN tagihan AS d ON a.id_pelanggan = d.id_pelanggan
+                        WHERE 
+                        $cari_wilayah
+                        $cari_kolektor
+                        d.created_at BETWEEN '$tgl1' and '$tgl2'
+                        ORDER BY $sorting DESC
+
+                            ");
+                        foreach ($data->result() as $rw): 
+                            ?>
+                            
+                        
+                        <tr>
+                            <td><?php echo $no; ?></td>
+                            <td><?php echo $rw->kd_pelanggan ?></td>
+                            <td><?php echo $rw->nama ?></td>
+                            <td><?php echo $rw->wilayah ?></td>
+                            <td><?php echo $rw->layanan ?></td>
+                            <td><?php echo bulan($rw->id_bulan).' '.$rw->tahun ?></td>
+                            <td>Rp. <?php echo number_format($rw->total_bayar,2); $total1 = $total1 + $rw->total_bayar ?></td>
+                            <td>Rp. <?php echo number_format($rw->denda); $total2 = $total2 + $rw->denda ?></td>
+                            <td><?php echo $rw->created_at ?></td>
+                            <td><?php echo get_data('a_user','id_user',$rw->created_by,'nama_lengkap') ?></td>
+                        </tr>
+                        
+                        <?php $no++; endforeach ?>
+                        <tr class="text-primary">
+                            <td colspan="6"><b>Total</b></td>
+                            <td colspan="1"><b>Rp <?php echo number_format($total1) ?></b></td>
+                            <td colspan="1"><b>Rp <?php echo number_format($total2) ?></b></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
     </div>
-  </div>
 </div>

@@ -124,16 +124,19 @@ class App extends CI_Controller {
         $this->load->view('tagihan/cetak_nota');
     }
 
-    public function statistik()
+    public function statistik($tipe)
     {
         if ($this->session->userdata('level') == '') {
             redirect('login');
         }
-        $data = array(
-            'konten' => 'statistik/view',
-            'judul_page' => 'Statistik',
-        );
-        $this->load->view('v_index', $data);
+        if ($tipe == 'bulan') {
+            $data = array(
+                'konten' => 'statistik/view_bulan',
+                'judul_page' => 'Statistik',
+            );
+            $this->load->view('v_index', $data);
+        }
+        
     }   
 
     public function pembukuan()
