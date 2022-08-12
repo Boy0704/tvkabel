@@ -17,6 +17,15 @@
 	            <?php endforeach ?>
 	        </select>
 		</div>
+
+		<div class="col-md-3">
+			<select class="form-control select2" name="limit">
+	            <option value="20" <?php echo ( isset($_GET['limit']) AND $_GET['limit'] == 20 ) ? 'selected' : '' ?> >20 Data</option>
+	            <option value="30" <?php echo ( isset($_GET['limit']) AND $_GET['limit'] == 30 ) ? 'selected' : '' ?> >30 Data</option>
+	            <option value="40" <?php echo ( isset($_GET['limit']) AND $_GET['limit'] == 40 ) ? 'selected' : '' ?>>40 Data</option>
+	            <option value="">Semua Data</option>
+	        </select>
+		</div>
 		<!-- <div class="col-md-3">
 			<select class="form-control select2" name="tahun">
 	            <option value="">Tahun</option>
@@ -65,7 +74,12 @@
 		            	$this->db->where('id_wilayah', $id_wilayah);
 		            }
 		            $this->db->order_by('id_pelanggan', 'desc');
-		            $this->db->limit(20);
+		            if ( isset($_GET['limit']) AND !empty($_GET['limit']) ) {
+		            	$limit = $this->input->get('limit');
+		            	$this->db->limit($limit);
+		            } else {
+		            	$this->db->limit(20);
+		            }
 					$data_tagihan = $this->db->get('pelanggan');
 					foreach ($data_tagihan->result() as $rw): ?>
 						
