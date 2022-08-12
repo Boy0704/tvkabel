@@ -151,31 +151,10 @@ class App extends CI_Controller {
         $this->load->view('v_index', $data);
     }   
 
-    public function view_laporan()
-    {
-        if ($this->session->userdata('level') == '') {
-            redirect('login');
-        }
-        $data = array(
-            'konten' => 'laporan/view',
-            'judul_page' => 'Laporan',
-        );
-        $this->load->view('v_index', $data);
-    }
 
-    public function laporan($view)
+    public function excel_pembukuan()
     {
-        $data = array(
-            'tgl1' => $this->input->post('tgl1'),
-            'tgl2' => $this->input->post('tgl2'),
-        );
-        if ($view == 'toko') {
-            $this->load->view('laporan/toko.php', $data);
-        } else if($view == 'stok') {
-            $this->load->view('laporan/stok.php', $data);
-        } else if($view == 'penjualan') {
-            $this->load->view('laporan/penjualan.php', $data);
-        } 
+        $this->load->view('laporan/pembukuan');
     }
 
 	

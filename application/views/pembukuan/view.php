@@ -49,10 +49,11 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-1" style="padding-top: 33px;padding-bottom: 12px;">
+                <div class="col-md-3" style="padding-top: 33px;padding-bottom: 12px;">
                     <button class="btn btn-info">
                         <i class="fa fa-search">search</i>
                     </button>
+                    <a href="app/excel_pembukuan?<?php echo param_get() ?>" target="_blank" class="btn btn-warning"><i class="fa fa-print"></i> Export Excel</a>
                 </div>
             </div>
             </form>
@@ -97,27 +98,27 @@
                         $data = $this->db->query("
 
                                  SELECT
-        a.id_pelanggan,
-        a.kd_pelanggan,
-        a.nama,
-        c.wilayah,
-        b.layanan,
-        d.id_bulan,
-        d.tahun,
-        d.total_bayar,
-        d.denda,
-        d.created_at,
-        d.created_by
-    FROM
-        pelanggan AS a
-        INNER JOIN layanan AS b ON a.id_layanan = b.id_layanan
-        INNER JOIN wilayah AS c ON a.id_wilayah = c.id_wilayah
-        INNER JOIN tagihan AS d ON a.id_pelanggan = d.id_pelanggan
-                        WHERE 
-                        $cari_wilayah
-                        $cari_kolektor
-                        d.created_at BETWEEN '$tgl1 00:00:59' and '$tgl2 23:59:59'
-                        ORDER BY $sorting DESC
+                                    a.id_pelanggan,
+                                    a.kd_pelanggan,
+                                    a.nama,
+                                    c.wilayah,
+                                    b.layanan,
+                                    d.id_bulan,
+                                    d.tahun,
+                                    d.total_bayar,
+                                    d.denda,
+                                    d.created_at,
+                                    d.created_by
+                                FROM
+                                    pelanggan AS a
+                                    INNER JOIN layanan AS b ON a.id_layanan = b.id_layanan
+                                    INNER JOIN wilayah AS c ON a.id_wilayah = c.id_wilayah
+                                    INNER JOIN tagihan AS d ON a.id_pelanggan = d.id_pelanggan
+                                                    WHERE 
+                                                    $cari_wilayah
+                                                    $cari_kolektor
+                                                    d.created_at BETWEEN '$tgl1 00:00:59' and '$tgl2 23:59:59'
+                                                    ORDER BY $sorting DESC
 
                             ");
                         foreach ($data->result() as $rw): 

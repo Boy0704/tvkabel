@@ -1,5 +1,12 @@
 <?php 
 
+function param_get()
+{
+	$url = parse_url($_SERVER['REQUEST_URI']);
+	return $url['query'];
+}
+
+
 function cek_tagihan_lunas($id_plgn, $tahun, $bln)
 {
 	$CI =& get_instance();
