@@ -97,7 +97,7 @@ class App extends CI_Controller {
         ?>
         <script type="text/javascript">
             alert("Tagihan berhasil dibayar !");
-            window.location = "<?php echo base_url() ?>app/tagihan_pelanggan";
+            window.location = "<?php echo base_url() ?>app/cetak_nota/<?php echo $id_pelanggan.'/'.$tahun.'/'.$id_bulan ?>";
         </script>
         <?php
     }

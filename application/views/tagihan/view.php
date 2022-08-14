@@ -116,7 +116,7 @@
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
 											<h4 class="modal-title">Bayar Tagihan</h4> </div>
-										<form action="app/simpan_tagihan/<?php echo $rw->id_pelanggan.'/'.$tahun.'/'.$i ?>" method="POST">
+										<form action="app/simpan_tagihan/<?php echo $rw->id_pelanggan.'/'.$tahun.'/'.$i ?>" target="_blank" method="POST">
 										<div class="modal-body">
 											
 												<table class="table">

