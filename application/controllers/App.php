@@ -81,25 +81,41 @@ class App extends CI_Controller {
         $created_at = get_waktu();
         $created_by = ($this->session->userdata('level') == 'admin') ? $kolektor : $this->session->userdata('id_user');
         $total_bayar = $biaya + $denda;
-        $data = array(
-            'id_pelanggan' => $id_pelanggan,
-            'id_bulan' => $id_bulan,
-            'tahun' => $tahun,
-            'bayar_via' => $bayar_via,
-            'tanggal_bayar' => $tanggal_bayar,
-            'denda' => $denda,
-            'tagihan' => $biaya,
-            'total_bayar' => $total_bayar,
-            'created_at' => $created_at,
-            'created_by' => $created_by,
-        );
-        $this->db->insert('tagihan', $data);
-        ?>
-        <script type="text/javascript">
-            alert("Tagihan berhasil dibayar !");
-            window.location = "<?php echo base_url() ?>app/cetak_nota/<?php echo $id_pelanggan.'/'.$tahun.'/'.$id_bulan ?>";
-        </script>
-        <?php
+
+        $this->db->where('id_pelanggan', $id_pelanggan);
+        $this->db->where('id_bulan', $id_bulan);
+        $this->db->where('tahun', $tahun);
+        $cek = $this->db->get('tagihan');
+        if ($cek->num_rows() > 0) {
+            ?>
+            <script type="text/javascript">
+                alert("Tagihan sudah dibayar !");
+                window.location = "<?php echo base_url() ?>app/cetak_nota/<?php echo $id_pelanggan.'/'.$tahun.'/'.$id_bulan ?>";
+            </script>
+            <?php
+        } else {
+            $data = array(
+                'id_pelanggan' => $id_pelanggan,
+                'id_bulan' => $id_bulan,
+                'tahun' => $tahun,
+                'bayar_via' => $bayar_via,
+                'tanggal_bayar' => $tanggal_bayar,
+                'denda' => $denda,
+                'tagihan' => $biaya,
+                'total_bayar' => $total_bayar,
+                'created_at' => $created_at,
+                'created_by' => $created_by,
+            );
+            $this->db->insert('tagihan', $data);
+            ?>
+            <script type="text/javascript">
+                alert("Tagihan berhasil dibayar !");
+                window.location = "<?php echo base_url() ?>app/cetak_nota/<?php echo $id_pelanggan.'/'.$tahun.'/'.$id_bulan ?>";
+            </script>
+            <?php
+        }
+
+        
     }
 
     public function batalkan_tagihan($id_pelanggan, $tahun, $id_bulan)
