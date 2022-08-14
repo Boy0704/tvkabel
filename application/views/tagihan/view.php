@@ -100,12 +100,16 @@
 						<td><?php echo get_data('wilayah','id_wilayah',$rw->id_wilayah,'wilayah').' '.$rw->alamat ?></td>
 						<td>
 							<?php 
+							$success = "success";
+							if ($this->session->userdata('id_user') == '6') {
+								$success = "warning";
+							}
 							for ($i=1; $i <= 12; $i++) { 
 								if ($i > 1) {
 									//echo "&nbsp; &nbsp;";
 								}
 								$cek_tagihan_lunas = cek_tagihan_lunas($rw->id_pelanggan, $tahun, $i);
-								$sts_warna = ($cek_tagihan_lunas) ? 'success' : 'danger';
+								$sts_warna = ($cek_tagihan_lunas) ? $success : 'danger';
 								?>
 
 								<a class="btn btn-<?php echo $sts_warna ?>" data-toggle="modal" data-target="#modal-<?php echo $rw->id_pelanggan ?>-<?php echo $i ?>"><?php echo $i ?></a>
