@@ -63,6 +63,7 @@
             <tr>
                 <th>No</th>
 		<th>ID Pelanggan</th>
+		<th>Foto Rumah</th>
 		<th>Nama</th>
 		<th>Wilayah</th>
 		<th>Rt</th>
@@ -102,6 +103,18 @@
                 <tr>
 			<td width="80px"><?php echo $no; ?></td>
 			<td><?php echo $pelanggan->kd_pelanggan ?></td>
+			<td>
+				<?php 
+				if ($pelanggan->foto_rumah != "") {
+					echo '<a class="lihat-gambar btn btn-info btn-xs" onclick="openModal(
+					\''.$pelanggan->id_pelanggan.'\',\''.$pelanggan->foto_rumah.'\')">View IMG</a>';
+				} else {
+					echo  '<a class="lihat-gambar btn btn-danger btn-xs" onclick="openModal(
+					\''.$pelanggan->id_pelanggan.'\',\''.$pelanggan->foto_rumah.'\')">No IMG</a>';
+				}
+
+				 ?>
+			</td>
 			<td><?php echo $pelanggan->nama ?></td>
 			<td><?php echo get_data('wilayah','id_wilayah',$pelanggan->id_wilayah,'wilayah') ?></td>
 			<td><?php echo get_data('rt','id_rt',$pelanggan->id_rt,'rt') ?></td>
@@ -143,4 +156,43 @@
                 <?php echo $pagination ?>
             </div>
         </div> -->
-    
+
+<div class="modal fade" id="modal-default">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title">Foto Rumah</h4>
+    </div>
+    <div class="modal-body">
+      <span id="foto_rumah"></span>
+      <form action="pelanggan/upload_foto_rumah?<?php echo param_get() ?>" method="POST" enctype="multipart/form-data">
+      	<div class="form-group">
+      		<input type="hidden" name="id_pelanggan" id="id_pelanggan">
+      		<input type="file" name="foto_rumah" accept="image/png, image/gif, image/jpeg" class="form-control">
+      	</div>
+      	<div class="form-group">
+      		<button class="btn btn-primary">Update Foto</button>
+      	</div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+	function openModal(id_pelanggan, foto_rumah) {
+		$('#modal-default').modal('show');
+		$("#id_pelanggan").val(id_pelanggan);
+		if (foto_rumah == '') {
+			$("#foto_rumah").html("<h2>Tidak ada foto</h2>");
+		} else {
+			$("#foto_rumah").html('<img src="image/foto_rumah/'+foto_rumah+'" style="width: 100%;">');
+		}
+	}
+</script>

@@ -31,7 +31,7 @@
         <li><a href="app"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         
         <?php if ($this->session->userdata('level')=='admin'): ?>
-        <li><a href="pelanggan"><i class="fa fa-user"></i> <span>Master Pelanggan</span></a></li>
+        <li><a href="pelanggan?a"><i class="fa fa-user"></i> <span>Master Pelanggan</span></a></li>
         <li><a href="layanan"><i class="fa fa-cube"></i> <span>Master Layanan</span></a></li>
         <li><a href="wilayah"><i class="fa fa-cube"></i> <span>Master Wilayah</span></a></li>
         

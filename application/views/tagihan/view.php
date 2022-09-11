@@ -97,7 +97,11 @@
 						<td><?php echo $no ?></td>
 						<td><?php echo $rw->kd_pelanggan ?></td>
 						<th><?php echo strtoupper($rw->nama) ?></th>
-						<td><?php echo get_data('wilayah','id_wilayah',$rw->id_wilayah,'wilayah').' '.$rw->alamat ?></td>
+						<td>
+							<a onclick="openModal('<?php echo $rw->foto_rumah ?>')">
+								<?php echo get_data('wilayah','id_wilayah',$rw->id_wilayah,'wilayah').' '.$rw->alamat ?>
+							</a>
+						</td>
 						<td>
 							<?php 
 							$success = "success";
@@ -212,3 +216,33 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="modal-default">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title">Foto Rumah</h4>
+    </div>
+    <div class="modal-body">
+      <span id="foto_rumah"></span>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+	function openModal(foto_rumah) {
+		$('#modal-default').modal('show');
+		if (foto_rumah == '') {
+			$("#foto_rumah").html("<h2>Tidak ada foto</h2>");
+		} else {
+			$("#foto_rumah").html('<img src="image/foto_rumah/'+foto_rumah+'" style="width: 100%;">');
+		}
+	}
+</script>

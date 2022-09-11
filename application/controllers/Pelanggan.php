@@ -16,6 +16,30 @@ class Pelanggan extends CI_Controller
         }
     }
 
+    public function upload_foto_rumah()
+    {
+    	$id_pelanggan = $this->input->post('id_pelanggan');
+    	$foto_rumah = upload_gambar_biasa('foto_rumah', 'image/foto_rumah/', 'jpeg|png|jpg|gif', 10000, 'foto_rumah');
+    	if($foto_rumah != strip_tags($foto_rumah)) {
+		    ?>
+		    <script type="text/javascript">
+		    	alert("<?php echo $foto_rumah ?>");
+		    	window.location = "<?php echo base_url() ?>/pelanggan?<?php echo param_get() ?>";
+		    </script>
+		    <?php
+		} else {
+			$this->db->where('id_pelanggan', $id_pelanggan);
+			$this->db->update('pelanggan', ['foto_rumah'=>$foto_rumah]);
+			?>
+		    <script type="text/javascript">
+		    	alert("berhasil upload foto rumah");
+		    	window.location = "<?php echo base_url() ?>/pelanggan?<?php echo param_get() ?>";
+		    </script>
+		    <?php
+		}
+
+    }
+
     public function index()
     {
         $q = urldecode($this->input->get('q', TRUE));
