@@ -48,6 +48,7 @@
          <?php endif ?>
          <?php if ($this->session->userdata('level')=='kolektor'): ?>
          <li><a href="app/tagihan_pelanggan"><i class="fa fa-cart-plus"></i> <span>Tagihan Pelanggan</span></a></li>
+         <li><a href="app/pembukuan?tgl1=<?php echo date('Y-m-d') ?>&tgl2=<?php echo date('Y-m-d') ?>&sorting=created_at&id_wilayah=&kolektor="><i class="fa fa-print"></i> <span>Pembukuan</span></a></li>
          <li><a href="login/logout"><i class="fa fa-sign-out"></i> <span>Keluar</span></a></li>
         <?php endif ?>
        
